@@ -83,10 +83,10 @@ class BaseModel(objax.Module):
         self.num_data = self.X.shape[0]  # number of data
         self.func_dim = func_dim  # number of latent dimensions
         self.obs_dim = Y.shape[1]  # dimensionality of the observations, Y
-        if isinstance(self.kernel, Independent):
-            pseudo_lik_size = self.func_dim  # the multi-latent case
-        else:
-            pseudo_lik_size = self.obs_dim
+        # if isinstance(self.kernel, Independent):
+        #     pseudo_lik_size = self.func_dim  # the multi-latent case
+        # else:
+        pseudo_lik_size = self.obs_dim
         self.pseudo_likelihood = GaussianDistribution(
             mean=np.zeros([self.num_data, pseudo_lik_size, 1]),
             covariance=1e2 * np.tile(np.eye(pseudo_lik_size), [self.num_data, 1, 1])
