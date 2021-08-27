@@ -1,13 +1,11 @@
 import math
 import torch
 import numpy as np
-from gpytorch.kernels import Kernel, ScaleKernel, MaternKernel
-from scipy.special import binom
-from gpytorch.settings import trace_mode
-from gpytorch.functions import MaternCovariance
-from .utils import solve_lyap_vec, balance_ss
-from ..cssgp import ContinuousSSGP
 from ..lgssm import LGSSM
+from scipy.special import binom
+from ..cssgp import ContinuousSSGP
+from .utils import solve_lyap_vec, balance_ss, _cssgp_to_lgssm
+from gpytorch.kernels import Kernel, ScaleKernel, MaternKernel
 
 __all__ = ["MaternKernel"]
 
@@ -57,10 +55,13 @@ class MaternKernel(Kernel):
             Pinf = solve_lyap_vec(Gb, Lb, Qb)
         return ContinuousSSGP(Pinf, Gb, Lb, Hb, Qb)
 
-    def get_lgssm(self, R: torch.Tensor, to: float = 0.0) ->LGSSM:
-        Pinf, G, L, H, Q = self._get_cssgp()
-
-        return LGSSM(Pinf, F, Q, H, R)
+    def LGSSM(self,
+              R: torch.Tensor,
+              ts:torch.Tensor,
+              t0: float = 0.0) -> LGSSM:
+        cssgp = self._get_cssgp()
+        t0 = torch.Tensor(t0).view(1,1)
+        return _cssgp_to_lgssm(cssgp, R, ts, t0)
 
 
 def get_matern_sde(variance: torch.Tensor,
