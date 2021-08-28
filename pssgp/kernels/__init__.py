@@ -1,1 +1,1 @@
-from .matern import MaternKernel
+from .matern import MyMaternKernel

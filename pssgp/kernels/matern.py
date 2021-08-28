@@ -7,10 +7,10 @@ from ..cssgp import ContinuousSSGP
 from .utils import solve_lyap_vec, balance_ss, _cssgp_to_lgssm
 from gpytorch.kernels import Kernel, ScaleKernel, MaternKernel
 
-__all__ = ["MaternKernel"]
+__all__ = ["MyMaternKernel"]
 
 
-class MaternKernel(Kernel):
+class MyMaternKernel(Kernel):
 
     has_lengthscale = True
 
@@ -27,6 +27,7 @@ class MaternKernel(Kernel):
         :param kwargs: Miscellaneous parameters
                        Refer https://docs.gpytorch.ai/en/latest/kernels.html#maternkernel
         """
+        super(MyMaternKernel, self).__init__(**kwargs)
         self.kernel = ScaleKernel(MaternKernel(nu, **kwargs),
                                   outputscale_prior=outputscale_prior,
                                   **kwargs)
