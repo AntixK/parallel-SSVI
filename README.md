@@ -10,9 +10,10 @@ PSSGP:
 - [x] Kernel Utils
 - [x] Balancing
 - [x] Lyap eq solver
-- [ ] Sequential Kalman Filter
+- [x] Sequential Kalman Filter
 - [ ] Parallel Kalman Filter
-- [ ] Test Matern Kernel with GpyTorch
+- [ ] JIT Kalman Filters
+- [x] Test Matern Kernel with GpyTorch
 - [ ] Compare GPR with sequential implementation.
 
  

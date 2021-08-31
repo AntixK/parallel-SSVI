@@ -95,8 +95,8 @@ def _sequential_rts_smoother(lgssm: LGSSM,
                       init=(F[1:], Q[1:], ms[:-1], Ps[:-1], mps[1:], Pps[1:]),
                       xs=(ms[-1], Ps[-1]),
                       reverse=True)
-    sms = concatenate([sms, ms[-1].expand_dims(0)], axis=0)
-    sPs = concatenate([sPs, Ps[-1].expand_dims(0)], axis=0)
+    sms = concatenate([sms, np.expand_dims(ms[-1], 0)], axis=0)
+    sPs = concatenate([sPs, np.expand_dims(Ps[-1], 0)], axis=0)
     return sms, sPs
 
 
